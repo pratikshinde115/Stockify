@@ -1,5 +1,5 @@
 from flask import Flask
-from housing.logger import logging
+from stockify.logger import logging
 app= Flask(__name__)
 
 @app.route('/', methods = ['GET','POST'])

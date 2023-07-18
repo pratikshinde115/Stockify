@@ -9,7 +9,7 @@ def get_requirements_list()->List[str]:
         requirement_file.readlines().remove('-e .')
 setup(
     name='stockify',
-    version='0.0.1',
+    version='0.0.2',
     author='stockify',
     packages=find_packages(),
     install_requires=get_requirements_list()

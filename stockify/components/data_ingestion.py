@@ -6,7 +6,6 @@ from stockify.entity.artifact_entity import DataIngestionArtifact
 import tarfile
 import numpy as np
 from six.moves import urllib
-import yfinance
 import pandas as pd
 import numpy as np
 from zipfile import ZipFile
@@ -83,10 +82,7 @@ class DataIngestion:
             train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,file_name)
             test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,file_name)
 
-            x_train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,'x_train_'+file_name)
-            y_train_file_path = os.path.join(self.data_ingestion_config.ingested_train_dir,'y_train_'+file_name)
-            x_test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,'x_test_'+file_name)
-            y_test_file_path = os.path.join(self.data_ingestion_config.ingested_test_dir,'y_test_'+file_name)
+
 
         
             housing_data_frame = pd.read_csv(housing_file_path)
@@ -99,30 +95,22 @@ class DataIngestion:
             traning = int(len(df)*0.70)
             testing = len(df) - traning
             traning,testing = df[0:traning],df[testing:len(df)]
-            def X_Y(df,timestamp):
-                X,Y = [],[]
+            traning = pd.DataFrame(traning)
+            testing = pd.DataFrame(testing)
 
-                for i in range(0,len(df)-timestamp-1):
-                    X.append(df[i:(i+timestamp),0])
-                    Y.append(df[i+timestamp,0])
-                return pd.DataFrame(X),pd.DataFrame(Y)
-            xtrain,ytrain= X_Y(traning,100)
-            xtest,ytest= X_Y(testing,100)
 
             
             if traning is not None:
                 os.makedirs(self.data_ingestion_config.ingested_train_dir,exist_ok=True)
-                logging.info(f"Exporting training datset to file: [{x_train_file_path ,y_train_file_path}]")
-                xtrain.to_csv(x_train_file_path,index=False)
-                xtrain.to_csv(y_train_file_path,index=False)
+                logging.info(f"Exporting training datset to file: [{train_file_path,}]")
+                traning.to_csv(train_file_path,index=False)
 
 
 
             if testing is not None:
                 os.makedirs(self.data_ingestion_config.ingested_test_dir, exist_ok= True)
-                logging.info(f"Exporting test dataset to file: [{x_test_file_path,y_test_file_path}]")
-                xtest.to_csv(x_test_file_path,index=False)
-                xtest.to_csv(y_test_file_path,index=False)
+                logging.info(f"Exporting test dataset to file: [{test_file_path}]")
+                testing.to_csv(test_file_path,index=False)
 
 
             data_ingestion_artifact = DataIngestionArtifact(train_file_path=train_file_path,

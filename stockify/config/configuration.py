@@ -79,10 +79,7 @@ class Configuartion:
             data_validation_config = self.config_info[DATA_VALIDATION_CONFIG_KEY]
 
 
-            schema_file_path = os.path.join(ROOT_DIR,
-            data_validation_config[DATA_VALIDATION_SCHEMA_DIR_KEY],
-            data_validation_config[DATA_VALIDATION_SCHEMA_FILE_NAME_KEY]
-            )
+            
 
             report_file_path = os.path.join(data_validation_artifact_dir,
             data_validation_config[DATA_VALIDATION_REPORT_FILE_NAME_KEY]
@@ -94,7 +91,6 @@ class Configuartion:
             )
 
             data_validation_config = DataValidationConfig(
-                schema_file_path=schema_file_path,
                 report_file_path=report_file_path,
                 report_page_file_path=report_page_file_path,
             )
@@ -114,14 +110,8 @@ class Configuartion:
 
             data_transformation_config_info=self.config_info[DATA_TRANSFORMATION_CONFIG_KEY]
 
-            add_bedroom_per_room=data_transformation_config_info[DATA_TRANSFORMATION_ADD_BEDROOM_PER_ROOM_KEY]
 
-
-            preprocessed_object_file_path = os.path.join(
-                data_transformation_artifact_dir,
-                data_transformation_config_info[DATA_TRANSFORMATION_PREPROCESSING_DIR_KEY],
-                data_transformation_config_info[DATA_TRANSFORMATION_PREPROCESSED_FILE_NAME_KEY]
-            )
+            
 
             
             transformed_train_dir=os.path.join(
@@ -140,8 +130,6 @@ class Configuartion:
             
 
             data_transformation_config=DataTransformationConfig(
-                add_bedroom_per_room=add_bedroom_per_room,
-                preprocessed_object_file_path=preprocessed_object_file_path,
                 transformed_train_dir=transformed_train_dir,
                 transformed_test_dir=transformed_test_dir
             )

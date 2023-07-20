@@ -3,5 +3,9 @@ numpy
 gunicorn 
 sklearn
 pandas
-yfinances
+# yfinances
+pyYaml
+dill
+evidently==0.2.5
+
 -e .
